@@ -27,36 +27,21 @@ export default {
         refreshModel: true,
       });
 
-      api.modifyClass("model:composer", {
-        pluginId: "discourse-events",
+      api.addModelGetter("composer", "canCreateEvent", function () {
+        return (
+          currentUser?.staff ||
+          currentUser?.trust_level >= this.category?.events_min_trust_to_create
+        );
+      });
 
-        @discourseComputed(
-          "subtype",
-          "category.events_enabled",
-          "topicFirstPost",
-          "topic.event",
-          "canCreateEvent"
-        )
-        showEventControls(
-          subtype,
-          categoryEnabled,
-          topicFirstPost,
-          event,
-          canCreateEvent
-        ) {
-          return (
-            topicFirstPost &&
-            (subtype === "event" || categoryEnabled || event) &&
-            canCreateEvent
-          );
-        },
-
-        @discourseComputed("category.events_min_trust_to_create")
-        canCreateEvent(minTrust) {
-          return (
-            currentUser?.staff || currentUser?.trust_level >= minTrust
-          );
-        },
+      api.addModelGetter("composer", "showEventControls", function () {
+        return (
+          this.topicFirstPost &&
+          (this.subtype === "event" ||
+            this.category?.events_enabled ||
+            this.topic?.event) &&
+          this.canCreateEvent
+        );
       });
 
       api.modifyClass("component:composer-body", {
@@ -99,33 +84,26 @@ export default {
         },
       });
 
-      api.modifyClass("model:topic", {
-        pluginId: "discourse-events",
+      api.addModelGetter("topic", "canCreateEvent", function () {
+        return (
+          currentUser?.staff ||
+          currentUser?.trust_level >= this.category?.events_min_trust_to_create
+        );
+      });
 
-        @discourseComputed(
-          "subtype",
-          "category.events_enabled",
-          "canCreateEvent"
-        )
-        showEventControls(subtype, categoryEnabled, canCreateEvent) {
-          return (subtype === "event" || categoryEnabled) && canCreateEvent;
-        },
+      api.addModelGetter("topic", "showEventControls", function () {
+        return (
+          (this.subtype === "event" || this.category?.events_enabled) &&
+          this.canCreateEvent
+        );
+      });
 
-        @discourseComputed("category.events_min_trust_to_create")
-        canCreateEvent(minTrust) {
-          return (
-            currentUser?.staff || currentUser?.trust_level >= minTrust
-          );
-        },
-
-        @discourseComputed("last_read_post_number", "highest_post_number")
-        topicListItemClasses(lastRead, highest) {
-          let classes = "date-time title raw-link event-link raw-topic-link";
-          if (lastRead === highest) {
-            classes += " visited";
-          }
-          return classes;
-        },
+      api.addModelGetter("topic", "topicListItemClasses", function () {
+        let classes = "date-time title raw-link event-link raw-topic-link";
+        if (this.last_read_post_number === this.highest_post_number) {
+          classes += " visited";
+        }
+        return classes;
       });
 
       // necessary because topic-title plugin outlet only recieves model
@@ -232,18 +210,15 @@ export default {
 
       const user = api.getCurrentUser();
       if (user && user.admin) {
-        api.modifyClass("model:site-setting", {
-          pluginId: "discourse-events",
-
-          @discourseComputed("valid_values")
-          allowsNone() {
-            if (this.get("setting") === "events_timezone_default") {
+        api.registerValueTransformer(
+          "site-setting-allows-none",
+          ({ value, context: { siteSetting } }) => {
+            if (siteSetting.setting === "events_timezone_default") {
               return "site_settings.events_timezone_default_placeholder";
-            } else {
-              this._super();
             }
-          },
-        });
+            return value;
+          }
+        );
       }
 
       api.modifyClass("controller:topic", {
