@@ -46,7 +46,7 @@ module DiscourseEvents
     end
 
     def post_raw(event, post: nil, add_raw: false)
-      raw = event.description.present? ? event.description : event.name
+      raw = event.description.presence || event.name
       raw += "\n\n#{post.raw}" if post && add_raw
       raw
     end

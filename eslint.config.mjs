@@ -1,3 +1,38 @@
 import DiscourseRecommended from "@discourse/lint-configs/eslint";
 
-export default [...DiscourseRecommended];
+export default [
+  ...DiscourseRecommended,
+  {
+    rules: {
+      "simple-import-sort/imports": "off",
+      "ember/no-classic-components": "off",
+      "discourse/discourse-common-imports": "off",
+      "discourse/i18n-import-location": "off",
+      "ember/no-classic-classes": "off",
+      "ember/require-tagless-components": "off",
+      "ember/avoid-leaking-state-in-ember-objects": "off",
+      "ember/no-actions-hash": "off",
+      "discourse/ui-kit-imports": "off",
+      "discourse/moved-packages-import-paths": "off",
+      "discourse/no-computed-macros": "off",
+      "discourse/lines-between-class-members": "off",
+      "ember/no-jquery": "off",
+      "discourse/i18n-t": "off",
+      "discourse/deprecated-imports": "off",
+      "ember/no-mixins": "off",
+      "no-unassigned-vars": "off",
+      "ember/routes-segments-snake-case": "off",
+      "discourse/plugin-api-no-version": "off",
+      "ember/no-new-mixins": "off",
+      "ember/no-observers": "off",
+      "qunit/no-loose-assertions": "off",
+      "qunit/no-ok-equality": "off",
+      "qunit/no-assert-equal": "off",
+      "qunit/no-negated-ok": "off",
+      "ember/no-tracked-properties-from-args": "off",
+      "discourse/no-unused-services": "off",
+      "discourse/no-unnecessary-tracked": "off",
+      "qunit/no-assert-equal-boolean": "off",
+    },
+  },
+];

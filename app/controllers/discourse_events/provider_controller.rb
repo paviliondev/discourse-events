@@ -24,7 +24,7 @@ module DiscourseEvents
       if provider.errors.blank?
         render_serialized(provider, ProviderSerializer, root: "provider")
       else
-        render json: failed_json.merge(errors: provider.errors.full_messages), status: 400
+        render json: failed_json.merge(errors: provider.errors.full_messages), status: :bad_request
       end
     end
 
@@ -34,7 +34,7 @@ module DiscourseEvents
       if provider.errors.blank?
         render_serialized(provider, ProviderSerializer, root: "provider")
       else
-        render json: failed_json.merge(errors: provider.errors.full_messages), status: 400
+        render json: failed_json.merge(errors: provider.errors.full_messages), status: :bad_request
       end
     end
 

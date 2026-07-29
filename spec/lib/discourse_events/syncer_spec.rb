@@ -29,7 +29,7 @@ describe DiscourseEvents::Syncer do
   end
   # rubocop:enable Discourse/Plugins/NoMonkeyPatching
 
-  fab!(:source) { Fabricate(:discourse_events_source) }
+  fab!(:source, :discourse_events_source)
   fab!(:category)
   fab!(:user)
   fab!(:admin) { Fabricate(:user, admin: true) }

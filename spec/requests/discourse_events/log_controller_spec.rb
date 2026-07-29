@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe DiscourseEvents::LogController do
-  fab!(:log) { Fabricate(:discourse_events_log) }
+  fab!(:log, :discourse_events_log)
   fab!(:user) { Fabricate(:user, admin: true) }
 
   before { sign_in(user) }

@@ -220,8 +220,8 @@ describe DiscourseEvents::PublishManager do
   end
 
   describe "#update_registrations" do
-    fab!(:user2) { Fabricate(:user) }
-    fab!(:event) { Fabricate(:discourse_events_event) }
+    fab!(:user2, :user)
+    fab!(:event, :discourse_events_event)
     fab!(:event_topic) { Fabricate(:discourse_events_event_topic, event: event, topic: topic) }
 
     context "with discourse_events" do
@@ -284,7 +284,7 @@ describe DiscourseEvents::PublishManager do
 
         DiscoursePostEvent::Event.create!(
           id: post.id,
-          original_starts_at: Time.now + 1.hours,
+          original_starts_at: Time.now + 1.hour,
           original_ends_at: Time.now + 2.hours,
         )
       end

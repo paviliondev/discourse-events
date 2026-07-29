@@ -8,7 +8,7 @@ describe DiscourseEvents::SyncManager do
   fab!(:category)
   fab!(:user)
   fab!(:source) { Fabricate(:discourse_events_source, category: category, user: user) }
-  fab!(:event) { Fabricate(:discourse_events_event) }
+  fab!(:event, :discourse_events_event)
   fab!(:event_source) { Fabricate(:discourse_events_event_source, event: event, source: source) }
 
   before do

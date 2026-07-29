@@ -143,7 +143,7 @@ export default {
             this.templateName = "discovery/list";
           }
         },
-      });     
+      });
 
       api.addNavigationBarItem({
         name: "calendar",

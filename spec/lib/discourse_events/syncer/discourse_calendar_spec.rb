@@ -15,7 +15,7 @@ describe DiscourseEvents::Syncer::DiscourseCalendar do
       client: "discourse_calendar",
     )
   end
-  fab!(:event) { Fabricate(:discourse_events_event) }
+  fab!(:event, :discourse_events_event)
   fab!(:event_source) { Fabricate(:discourse_events_event_source, event: event, source: source) }
 
   before do

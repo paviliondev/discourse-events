@@ -34,9 +34,7 @@
 
 <td class="events-provider-authentication">
   {{#if this.provider.hasCredentials}}
-    <EventsProviderCredentials
-      @provider={{this.provider}}
-    />
+    <EventsProviderCredentials @provider={{this.provider}} />
   {{else}}
     <label>{{i18n "admin.events.provider.authentication.none"}}</label>
   {{/if}}

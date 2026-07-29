@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 describe DiscourseEvents::SourceController do
-  fab!(:source) { Fabricate(:discourse_events_source) }
-  fab!(:provider) { Fabricate(:discourse_events_provider) }
+  fab!(:source, :discourse_events_source)
+  fab!(:provider, :discourse_events_provider)
   fab!(:user) { Fabricate(:user, admin: true) }
 
   before { sign_in(user) }
@@ -111,10 +111,8 @@ describe DiscourseEvents::SourceController do
   end
 
   context "with a source with events" do
-    fab!(:event) { Fabricate(:discourse_events_event) }
-    fab!(:event_source) do
-      Fabricate(:discourse_events_event_source, source: source, event: event)
-    end
+    fab!(:event, :discourse_events_event)
+    fab!(:event_source) { Fabricate(:discourse_events_event_source, source: source, event: event) }
 
     it "destroys sources" do
       delete "/admin/plugins/events/source/#{source.id}.json"

@@ -10,8 +10,7 @@ const icons = {
   info: "circle-info",
 };
 
-const DOCUMENTATION_URL =
-  "https://github.com/angusmcleod/discourse-events";
+const DOCUMENTATION_URL = "https://github.com/angusmcleod/discourse-events";
 
 export default Component.extend({
   classNameBindings: [":events-message", "message.type", "loading"],
