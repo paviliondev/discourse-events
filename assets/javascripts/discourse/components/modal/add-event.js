@@ -1,3 +1,4 @@
+/* eslint-disable discourse/i18n-import-location, ember/no-classic-components, ember/require-tagless-components */
 import { tracked } from "@glimmer/tracking";
 import Component from "@ember/component";
 import { action } from "@ember/object";

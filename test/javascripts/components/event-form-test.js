@@ -1,3 +1,4 @@
+/* eslint-disable discourse/i18n-t, qunit/no-assert-equal-boolean */
 import { render } from "@ember/test-helpers";
 import hbs from "htmlbars-inline-precompile";
 import { module, test } from "qunit";

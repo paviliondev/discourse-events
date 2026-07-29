@@ -1,3 +1,4 @@
+/* eslint-disable discourse/deprecated-imports, discourse/discourse-common-imports, discourse/i18n-import-location, simple-import-sort/imports */
 import { htmlSafe } from "@ember/template";
 import Site from "discourse/models/site";
 import User from "discourse/models/user";

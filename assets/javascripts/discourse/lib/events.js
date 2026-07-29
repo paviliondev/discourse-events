@@ -1,3 +1,4 @@
+/* eslint-disable discourse/i18n-import-location */
 import I18n from "I18n";
 
 function convertName(string) {

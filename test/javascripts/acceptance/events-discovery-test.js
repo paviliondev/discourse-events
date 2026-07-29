@@ -1,3 +1,4 @@
+/* eslint-disable discourse/discourse-common-imports, qunit/no-loose-assertions, qunit/no-negated-ok */
 import { visit } from "@ember/test-helpers";
 import { test } from "qunit";
 import discoveryFixtures from "discourse/tests/fixtures/discovery-fixtures";

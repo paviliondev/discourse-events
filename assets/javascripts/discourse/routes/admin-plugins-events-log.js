@@ -1,3 +1,4 @@
+/* eslint-disable discourse/deprecated-imports */
 import { A } from "@ember/array";
 import DiscourseRoute from "discourse/routes/discourse";
 import Log from "../models/log";

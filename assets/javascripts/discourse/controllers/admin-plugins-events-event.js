@@ -1,3 +1,4 @@
+/* eslint-disable discourse/deprecated-imports, discourse/discourse-common-imports, discourse/i18n-import-location, discourse/lines-between-class-members, discourse/no-computed-macros, discourse/no-unused-services, ember/no-mixins, simple-import-sort/imports */
 import { A } from "@ember/array";
 import Controller from "@ember/controller";
 import { action } from "@ember/object";

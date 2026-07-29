@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-actions-hash, simple-import-sort/imports */
 import DiscourseRoute from "discourse/routes/discourse";
 import { service } from "@ember/service";
 

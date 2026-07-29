@@ -1,3 +1,4 @@
+/* eslint-disable discourse/discourse-common-imports, ember/no-actions-hash, ember/no-classic-classes, ember/no-classic-components, ember/require-tagless-components */
 import Component from "@ember/component";
 import discourseComputed from "discourse-common/utils/decorators";
 import Event from "../models/event";

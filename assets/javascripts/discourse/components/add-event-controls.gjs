@@ -1,3 +1,4 @@
+/* eslint-disable discourse/deprecated-imports, discourse/lines-between-class-members, discourse/ui-kit-imports, ember/no-tracked-properties-from-args */
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { action } from "@ember/object";
@@ -36,7 +37,7 @@ export default class AddToCalendar extends Component {
       this.siteSettings.events_event_label_no_text ||
       Boolean(
         this.args.category &&
-          this.args.category.custom_fields.events_event_label_no_text
+        this.args.category.custom_fields.events_event_label_no_text
       )
     );
   }

@@ -1,3 +1,4 @@
+/* eslint-disable discourse/discourse-common-imports, discourse/i18n-import-location, simple-import-sort/imports */
 import Component from "@glimmer/component";
 import dIcon from "discourse-common/helpers/d-icon";
 import I18n from "I18n";

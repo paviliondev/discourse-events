@@ -1,3 +1,4 @@
+/* eslint-disable discourse/deprecated-imports, discourse/discourse-common-imports, discourse/moved-packages-import-paths, discourse/ui-kit-imports, simple-import-sort/imports */
 import Component from "@glimmer/component";
 import { array } from "@ember/helper";
 import { on } from "@ember/modifier";

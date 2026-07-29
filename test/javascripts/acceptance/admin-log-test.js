@@ -1,3 +1,4 @@
+/* eslint-disable qunit/no-assert-equal, qunit/no-loose-assertions */
 import { visit } from "@ember/test-helpers";
 import { test } from "qunit";
 import {

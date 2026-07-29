@@ -1,3 +1,4 @@
+/* eslint-disable discourse/i18n-import-location, ember/no-actions-hash, ember/no-classic-classes, ember/no-mixins */
 import Controller from "@ember/controller";
 import { notEmpty } from "@ember/object/computed";
 import { service } from "@ember/service";

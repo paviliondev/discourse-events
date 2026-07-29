@@ -1,3 +1,4 @@
+/* eslint-disable discourse/i18n-import-location */
 import Component from "@glimmer/component";
 import { dasherize } from "@ember/string";
 import I18n from "I18n";

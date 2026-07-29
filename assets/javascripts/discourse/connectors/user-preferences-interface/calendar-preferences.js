@@ -1,3 +1,4 @@
+/* eslint-disable discourse/deprecated-imports, discourse/i18n-import-location */
 import { getOwner } from "@ember/application";
 import I18n from "I18n";
 

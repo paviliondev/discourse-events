@@ -1,1 +1,20 @@
-**/*.gjs
+# Legacy object-literal decorators are not supported by Prettier 3.
+assets/javascripts/discourse/components/event-filter-row.js
+assets/javascripts/discourse/components/events-calendar-day.js
+assets/javascripts/discourse/components/events-calendar-subscription.js
+assets/javascripts/discourse/components/events-calendar.js
+assets/javascripts/discourse/components/events-event-row.js
+assets/javascripts/discourse/components/events-event-table.js
+assets/javascripts/discourse/components/events-header.js
+assets/javascripts/discourse/components/events-message.js
+assets/javascripts/discourse/components/events-provider-credentials.js
+assets/javascripts/discourse/components/events-provider-row.js
+assets/javascripts/discourse/components/events-source-row.js
+assets/javascripts/discourse/components/events-subscription-selector.js
+assets/javascripts/discourse/components/modal/event-rsvp.js
+assets/javascripts/discourse/components/modal/events-confirm-event-deletion.js
+assets/javascripts/discourse/components/modal/events-connect-topic.js
+assets/javascripts/discourse/initializers/discourse-events.js
+assets/javascripts/discourse/mixins/message.js
+assets/javascripts/discourse/models/source.js
+assets/javascripts/discourse/routes/admin-plugins-events-event.js

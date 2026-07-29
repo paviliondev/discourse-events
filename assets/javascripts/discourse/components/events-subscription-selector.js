@@ -1,3 +1,4 @@
+/* eslint-disable discourse/discourse-common-imports, discourse/i18n-import-location, discourse/moved-packages-import-paths, ember/avoid-leaking-state-in-ember-objects, simple-import-sort/imports */
 import { service } from "@ember/service";
 import discourseComputed from "discourse-common/utils/decorators";
 import I18n from "I18n";

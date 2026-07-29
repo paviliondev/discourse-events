@@ -1,3 +1,4 @@
+/* eslint-disable discourse/discourse-common-imports, discourse/i18n-import-location, discourse/moved-packages-import-paths, ember/no-actions-hash, simple-import-sort/imports */
 import Category from "discourse/models/category";
 import getURL from "discourse-common/lib/get-url";
 import discourseComputed from "discourse-common/utils/decorators";

@@ -1,3 +1,4 @@
+/* eslint-disable discourse/no-computed-macros, ember/no-mixins */
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { notEmpty } from "@ember/object/computed";

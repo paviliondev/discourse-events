@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-new-mixins */
 import EmberObject, { action } from "@ember/object";
 import Mixin from "@ember/object/mixin";
 

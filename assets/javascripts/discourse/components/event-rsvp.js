@@ -1,3 +1,4 @@
+/* eslint-disable discourse/discourse-common-imports, discourse/i18n-import-location, discourse/lines-between-class-members, ember/no-classic-components, ember/require-tagless-components, simple-import-sort/imports */
 import Component from "@ember/component";
 import { action } from "@ember/object";
 import { service } from "@ember/service";

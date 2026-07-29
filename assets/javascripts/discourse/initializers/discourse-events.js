@@ -1,3 +1,4 @@
+/* eslint-disable discourse/discourse-common-imports, discourse/i18n-import-location, discourse/plugin-api-no-version, ember/no-jquery, simple-import-sort/imports */
 import EmberObject from "@ember/object";
 import { scheduleOnce } from "@ember/runloop";
 import $ from "jquery";

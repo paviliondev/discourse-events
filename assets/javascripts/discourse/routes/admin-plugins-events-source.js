@@ -1,3 +1,4 @@
+/* eslint-disable discourse/deprecated-imports, discourse/i18n-import-location, simple-import-sort/imports */
 import { A } from "@ember/array";
 import { service } from "@ember/service";
 import DiscourseRoute from "discourse/routes/discourse";

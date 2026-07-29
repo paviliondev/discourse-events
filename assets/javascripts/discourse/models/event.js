@@ -1,3 +1,4 @@
+/* eslint-disable discourse/deprecated-imports, ember/no-classic-classes */
 import { A } from "@ember/array";
 import EmberObject from "@ember/object";
 import { ajax } from "discourse/lib/ajax";

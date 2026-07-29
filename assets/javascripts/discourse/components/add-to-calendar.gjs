@@ -1,3 +1,4 @@
+/* eslint-disable discourse/i18n-import-location, discourse/moved-packages-import-paths, discourse/no-unused-services, discourse/ui-kit-imports, simple-import-sort/imports */
 import Component from "@glimmer/component";
 import { concat } from "@ember/helper";
 import { service } from "@ember/service";

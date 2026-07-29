@@ -1,3 +1,4 @@
+/* eslint-disable discourse/deprecated-imports, ember/no-observers */
 import { getOwner } from "@ember/application";
 
 export default {

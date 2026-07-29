@@ -1,3 +1,4 @@
+/* eslint-disable discourse/moved-packages-import-paths */
 import { computed } from "@ember/object";
 import CategoryChooser from "select-kit/components/category-chooser";
 

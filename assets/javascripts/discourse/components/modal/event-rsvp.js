@@ -1,3 +1,4 @@
+/* eslint-disable discourse/deprecated-imports, discourse/discourse-common-imports, discourse/i18n-import-location, ember/avoid-leaking-state-in-ember-objects, ember/no-classic-classes, ember/no-classic-components, ember/require-tagless-components, simple-import-sort/imports */
 import { getOwner } from "@ember/application";
 import Component from "@ember/component";
 import { action } from "@ember/object";

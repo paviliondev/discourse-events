@@ -1,3 +1,4 @@
+/* eslint-disable discourse/i18n-import-location, discourse/lines-between-class-members, discourse/moved-packages-import-paths, discourse/ui-kit-imports, simple-import-sort/imports */
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { Input } from "@ember/component";
@@ -26,7 +27,6 @@ export default class EventForm extends Component {
   @tracked endEnabled = false;
   @tracked allDay = false;
   @tracked deadline = false;
-  @tracked showTimezone = false;
   @tracked startDate;
   @tracked startTime;
   @tracked endDate;
@@ -35,6 +35,7 @@ export default class EventForm extends Component {
   @tracked rsvpEnabled = false;
   @tracked goingMax;
   @tracked usersGoing;
+  showTimezone = false;
 
   constructor() {
     super(...arguments);

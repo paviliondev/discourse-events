@@ -1,3 +1,4 @@
+/* eslint-disable qunit/no-loose-assertions, qunit/no-negated-ok */
 import { click, fillIn, visit } from "@ember/test-helpers";
 import { test } from "qunit";
 import Category from "discourse/models/category";

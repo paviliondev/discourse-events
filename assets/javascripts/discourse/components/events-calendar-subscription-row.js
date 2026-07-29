@@ -1,3 +1,4 @@
+/* eslint-disable discourse/moved-packages-import-paths, ember/no-jquery, simple-import-sort/imports */
 import { later } from "@ember/runloop";
 import $ from "jquery";
 import copyText from "discourse/lib/copy-text";

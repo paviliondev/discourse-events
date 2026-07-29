@@ -2,10 +2,14 @@
   "private": true,
   "devDependencies": {
     "@discourse/lint-configs": "3.2.0",
-    "ember-template-lint": "7.9.3",
     "eslint": "10.6.0",
-    "prettier": "2.8.8",
+    "lint-to-the-future": "^3.2.0",
+    "lint-to-the-future-eslint": "^4.0.0",
+    "prettier": "3.8.1",
     "stylelint": "17.5.0"
+  },
+  "scripts": {
+    "lttf:ignore": "lint-to-the-future ignore"
   },
   "engines": {
     "node": ">= 22",
