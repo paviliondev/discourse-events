@@ -1,11 +1,12 @@
+/* eslint-disable ember/no-classic-components, ember/require-tagless-components */
 import { tracked } from "@glimmer/tracking";
 import Component from "@ember/component";
 import { action } from "@ember/object";
-import I18n from "I18n";
+import { i18n } from "discourse-i18n";
 
 export default class AddEvent extends Component {
   @tracked bufferedEvent = this.model.event;
-  title = I18n.t("add_event.modal_title");
+  title = i18n("add_event.modal_title");
   valid = true;
 
   @action
@@ -20,7 +21,7 @@ export default class AddEvent extends Component {
       this.get("model.update")(this.bufferedEvent);
       this.closeModal();
     } else {
-      this.flash = I18n.t("add_event.error");
+      this.flash = i18n("add_event.error");
     }
   }
 

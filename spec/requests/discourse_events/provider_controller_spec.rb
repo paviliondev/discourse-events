@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe DiscourseEvents::ProviderController do
-  fab!(:provider) { Fabricate(:discourse_events_provider) }
+  fab!(:provider, :discourse_events_provider)
   fab!(:user) { Fabricate(:user, admin: true) }
 
   before { sign_in(user) }
@@ -89,14 +89,14 @@ describe DiscourseEvents::ProviderController do
       get "/admin/plugins/events/provider/#{provider.id}/authorize"
 
       expect(response.status).to eq(302)
-      state = read_secure_session["#{described_class::AUTH_SESSION_KEY}-#{user.id}"]
+      state = server_session["#{described_class::AUTH_SESSION_KEY}-#{user.id}"]
       expect(response).to redirect_to(provider.authorization_url(state))
     end
 
     it "handles authorization redirects" do
       state = "#{SecureRandom.hex}:#{provider.id}"
       code = "1234"
-      write_secure_session("#{described_class::AUTH_SESSION_KEY}-#{user.id}", state)
+      server_session["#{described_class::AUTH_SESSION_KEY}-#{user.id}"] = state
 
       DiscourseEvents::Provider.any_instance.stubs(:request_token).returns(nil)
       DiscourseEvents::Provider.any_instance.expects(:request_token).with(code).once

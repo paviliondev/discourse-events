@@ -1,8 +1,8 @@
-import { htmlSafe } from "@ember/template";
+import { trustHTML } from "@ember/template";
+import { renderIcon } from "discourse/lib/icon-library";
 import Site from "discourse/models/site";
 import User from "discourse/models/user";
-import { renderIcon } from "discourse-common/lib/icon-library";
-import I18n from "I18n";
+import I18n, { i18n } from "discourse-i18n";
 
 const RANGE_FORMAT = "YYYY-MM-DD";
 
@@ -96,7 +96,7 @@ function googleUri(params) {
 
   href += `&details=${
     params.details ||
-    I18n.t("add_to_calendar.default_details", { url: params.url })
+    i18n("add_to_calendar.default_details", { url: params.url })
   }`;
 
   if (params.location) {
@@ -352,13 +352,13 @@ function eventLabel(event, args = {}) {
     if (args.showRsvp) {
       if (event.rsvp) {
         label += '<span class="dot">&middot;</span>';
-        label += `<span class="rsvp">${I18n.t(
+        label += `<span class="rsvp">${i18n(
           "add_event.rsvp_enabled_label"
         )}</span>`;
 
         if (event.going_max) {
           label += '<span class="dot">&middot;</span>';
-          label += `<span class="going-max">${I18n.t(
+          label += `<span class="going-max">${i18n(
             "add_event.going_max_label",
             { goingMax: event.going_max }
           )}</span>`;
@@ -384,24 +384,24 @@ function eventLabel(event, args = {}) {
       let m = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
 
       const timeLeft = pastDue
-        ? `${I18n.t("event_label.deadline.past_due")}: ${moment(start)
+        ? `${i18n("event_label.deadline.past_due")}: ${moment(start)
             .locale(I18n.locale)
             .fromNow()}`
         : `${
             d > 0
-              ? I18n.t("dates.medium.x_days", {
+              ? i18n("dates.medium.x_days", {
                   count: d,
                 })
               : ""
           } ${
             h > 0
-              ? I18n.t("dates.medium.x_hours", {
+              ? i18n("dates.medium.x_hours", {
                   count: h,
                 })
               : ""
           } ${
             m > 0
-              ? I18n.t("dates.medium.x_minutes", {
+              ? i18n("dates.medium.x_minutes", {
                   count: m,
                 })
               : ""
@@ -570,7 +570,7 @@ function eventsForDay(day, topics, args = {}) {
         }
         blockIndex++;
       } else if (topic.category) {
-        attrs["dotStyle"] = htmlSafe(`color: #${topic.category.color}`);
+        attrs["dotStyle"] = trustHTML(`color: #${topic.category.color}`);
       }
 
       if (!allDay && (!multiDay || startIsSame)) {
@@ -590,11 +590,11 @@ function eventsForDay(day, topics, args = {}) {
             buffer += 55;
           }
           let tStyle = `width:calc((100%*${daysInRow}) - ${buffer}px);background-color:#${topic.category.color};`;
-          attrs["titleStyle"] = htmlSafe(tStyle);
+          attrs["titleStyle"] = trustHTML(tStyle);
         }
       }
 
-      attrs["listStyle"] = htmlSafe(attrs["listStyle"]);
+      attrs["listStyle"] = trustHTML(attrs["listStyle"]);
 
       // Add placeholders if necessary
       if (blockStyle) {

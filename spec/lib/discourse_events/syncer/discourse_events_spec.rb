@@ -10,7 +10,7 @@ describe DiscourseEvents::Syncer::DiscourseEvents do
   fab!(:source) do
     Fabricate(:discourse_events_source, category: category, user: user, client: "discourse_events")
   end
-  fab!(:event) { Fabricate(:discourse_events_event) }
+  fab!(:event, :discourse_events_event)
   fab!(:event_source) { Fabricate(:discourse_events_event_source, event: event, source: source) }
 
   before do

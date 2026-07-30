@@ -86,7 +86,7 @@
     }
 
     .control-group,
-    button:not(.toggle-secret-visibility):not(.show-filters) {
+    button:not(.toggle-secret-visibility, .show-filters) {
       margin-bottom: 1em;
     }
   }
@@ -356,7 +356,7 @@
 }
 
 .admin-plugins.events {
-  .admin-controls nav:after {
+  .admin-controls nav::after {
     background: unset;
   }
 }

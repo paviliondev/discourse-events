@@ -1,13 +1,12 @@
 import EmberObject from "@ember/object";
 import { scheduleOnce } from "@ember/runloop";
-import $ from "jquery";
-import { withPluginApi } from "discourse/lib/plugin-api";
-import { CREATE_TOPIC } from "discourse/models/composer";
 import {
   default as discourseComputed,
   observes,
-} from "discourse-common/utils/decorators";
-import I18n from "I18n";
+} from "discourse/lib/decorators";
+import { withPluginApi } from "discourse/lib/plugin-api";
+import { CREATE_TOPIC } from "discourse/models/composer";
+import { i18n } from "discourse-i18n";
 import Provider from "../models/provider";
 
 export default {
@@ -17,7 +16,7 @@ export default {
     const currentUser = container.lookup("service:current-user");
     container.registry.register("model:provider", Provider);
 
-    withPluginApi("1.4.0", (api) => {
+    withPluginApi((api) => {
       api.serializeToDraft("event");
       api.serializeOnCreate("event");
       api.serializeToTopic("event", "topic.event");
@@ -54,7 +53,9 @@ export default {
 
         @discourseComputed("category.events_min_trust_to_create")
         canCreateEvent(minTrust) {
-          return currentUser.staff || currentUser.trust_level >= minTrust;
+          return (
+            currentUser?.staff || currentUser?.trust_level >= minTrust
+          );
         },
       });
 
@@ -68,15 +69,25 @@ export default {
 
         showEventControls() {
           const showControls = this.get("composer.showEventControls");
-          const $container = $(".composer-fields .title-and-category");
+          const controlsContainer = document.querySelector(
+            ".composer-fields .title-and-category"
+          );
 
-          $container.toggleClass("show-event-controls", Boolean(showControls));
+          controlsContainer?.classList.toggle(
+            "show-event-controls",
+            Boolean(showControls)
+          );
 
-          if (showControls) {
-            const $anchor = this.site.mobileView
-              ? $container.find(".title-input")
-              : $container;
-            $(".composer-controls-event").appendTo($anchor);
+          if (showControls && controlsContainer) {
+            const anchor = this.site.mobileView
+              ? controlsContainer.querySelector(".title-input")
+              : controlsContainer;
+            const controls = document.querySelector(
+              ".composer-controls-event"
+            );
+            if (anchor && controls) {
+              anchor.append(controls);
+            }
           }
 
           this.composerResized();
@@ -102,7 +113,9 @@ export default {
 
         @discourseComputed("category.events_min_trust_to_create")
         canCreateEvent(minTrust) {
-          return currentUser.staff || currentUser.trust_level >= minTrust;
+          return (
+            currentUser?.staff || currentUser?.trust_level >= minTrust
+          );
         },
 
         @discourseComputed("last_read_post_number", "highest_post_number")
@@ -143,7 +156,7 @@ export default {
             this.templateName = "discovery/list";
           }
         },
-      });     
+      });
 
       api.addNavigationBarItem({
         name: "calendar",
@@ -190,14 +203,14 @@ export default {
 
           if (category.get("custom_fields.events_agenda_enabled")) {
             views.push({
-              name: I18n.t("filters.agenda.title"),
+              name: i18n("filters.agenda.title"),
               value: "agenda",
             });
           }
 
           if (category.get("custom_fields.events_calendar_enabled")) {
             views.push({
-              name: I18n.t("filters.calendar.title"),
+              name: i18n("filters.calendar.title"),
               value: "calendar",
             });
           }
@@ -287,7 +300,7 @@ export default {
           if (action === CREATE_TOPIC && eventsRequired && !event) {
             return EmberObject.create({
               failed: true,
-              reason: I18n.t("composer.error.event_missing"),
+              reason: i18n("composer.error.event_missing"),
               lastShownAt: lastValidatedAt,
             });
           }

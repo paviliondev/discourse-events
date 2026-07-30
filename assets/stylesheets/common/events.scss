@@ -2,6 +2,7 @@
   .d-modal__container {
     max-width: 630px;
   }
+
   .d-modal__body {
     padding: 20px;
   }
@@ -114,7 +115,7 @@
   .select-kit-body {
     .events-calendar-subscription-warning {
       padding: 6px 16px;
-      background-color: rgba(255, 247, 78, 0.32);
+      background-color: rgb(255, 247, 78, 0.32);
       font-size: 1.1em;
 
       .fa.d-icon {
@@ -287,8 +288,8 @@
     }
 
     &.different-month .container {
-      background-color: rgba(var(--primary-low), 0.5);
-      color: rgba(var(--primary), 0.5);
+      background-color: rgb(var(--primary-low), 0.5);
+      color: rgb(var(--primary), 0.5);
       height: 100%;
     }
 
@@ -306,7 +307,7 @@
       min-width: 100%;
       overflow: visible;
       border: 1px solid var(--primary-low);
-      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 2px 2px rgb(0, 0, 0, 0.4);
       background-color: var(--secondary);
 
       .events {
@@ -460,11 +461,14 @@ ul.events-calendar-events {
     display: inline-block;
     cursor: pointer;
     color: var(--primary);
+
     .deadline {
       display: inline-block;
+
       svg {
         margin-right: 0.3em;
       }
+
       svg:nth-of-type(2) {
         margin-left: 0.6em;
       }
@@ -476,7 +480,7 @@ ul.events-calendar-events {
     cursor: pointer;
     line-height: 1.4;
     width: 100%;
-    word-wrap: break-word;
+    overflow-wrap: break-word;
     color: var(--primary);
     display: inline-block;
 
@@ -611,7 +615,7 @@ ul.events-calendar-events {
 
   .topic-list-item-event-time {
     .event-label {
-      padding: 0em 0.75em;
+      padding: 0 0.75em;
       min-height: 25px;
     }
   }
@@ -669,6 +673,7 @@ ul.events-calendar-events {
 ul.events-webcal-notices {
   float: right;
   margin: 10px 0;
+
   li {
     font-style: italic;
   }
@@ -684,4 +689,3 @@ ul.events-webcal-notices {
     height: 30px;
   }
 }
-

@@ -1,10 +1,6 @@
 import { click, fillIn, visit } from "@ember/test-helpers";
 import { test } from "qunit";
-import {
-  acceptance,
-  exists,
-  query,
-} from "discourse/tests/helpers/qunit-helpers";
+import { acceptance } from "discourse/tests/helpers/qunit-helpers";
 import selectKit from "discourse/tests/helpers/select-kit-helper";
 import { default as Subscriptions } from "../fixtures/subscription-fixtures";
 
@@ -136,13 +132,11 @@ acceptance("Events | Source", function (needs) {
   test("Displays the source admin", async (assert) => {
     await visit("/admin/plugins/events/source");
 
-    assert.ok(exists(".events.source"), "it shows the source route");
+    assert.dom(".events.source").exists("it shows the source route");
 
-    assert.equal(
-      query(".admin-events-controls h2").innerText.trim(),
-      "Sources",
-      "title displayed"
-    );
+    assert
+      .dom(".admin-events-controls h2")
+      .hasText("Sources", "title displayed");
   });
 
   test("Add source works", async (assert) => {
@@ -150,12 +144,10 @@ acceptance("Events | Source", function (needs) {
 
     await click("#add-source");
 
-    assert.ok(exists("tr[data-source-id=new]"), "it displays a new source row");
-    assert.strictEqual(
-      query("tr[data-source-id=new] .save-source").disabled,
-      true,
-      "it disables the save button"
-    );
+    assert.dom("tr[data-source-id=new]").exists("it displays a new source row");
+    assert
+      .dom("tr[data-source-id=new] .save-source")
+      .isDisabled("it disables the save button");
 
     await selectKit("tr[data-source-id=new] .source-provider").expand();
     await selectKit("tr[data-source-id=new] .source-provider").selectRowByValue(
@@ -164,11 +156,9 @@ acceptance("Events | Source", function (needs) {
 
     await fillIn("input[name=calendar_id]", "1234");
 
-    assert.strictEqual(
-      query("tr[data-source-id=new] .save-source").disabled,
-      false,
-      "it enables the save button"
-    );
+    assert
+      .dom("tr[data-source-id=new] .save-source")
+      .isNotDisabled("it enables the save button");
 
     await click("tr[data-source-id=new] .save-source");
   });
@@ -181,11 +171,9 @@ acceptance("Events | Source", function (needs) {
       "outlook"
     );
 
-    assert.strictEqual(
-      query("tr[data-source-id='1'] .save-source").disabled,
-      false,
-      "it enables the save button"
-    );
+    assert
+      .dom("tr[data-source-id='1'] .save-source")
+      .isNotDisabled("it enables the save button");
 
     await click(".save-source");
   });
@@ -196,9 +184,8 @@ acceptance("Events | Source", function (needs) {
     await selectKit(".source-provider").expand();
     await selectKit(".source-provider").selectRowByValue("outlook");
 
-    assert.ok(
-      exists("[name=calendar_id]"),
-      "it displays the appropriate option"
-    );
+    assert
+      .dom("[name=calendar_id]")
+      .exists("it displays the appropriate option");
   });
 });

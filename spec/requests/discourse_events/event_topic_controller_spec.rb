@@ -2,7 +2,7 @@
 
 describe DiscourseEvents::EventTopicController do
   fab!(:user) { Fabricate(:user, admin: true) }
-  fab!(:event) { Fabricate(:discourse_events_event) }
+  fab!(:event, :discourse_events_event)
 
   before { sign_in(user) }
 

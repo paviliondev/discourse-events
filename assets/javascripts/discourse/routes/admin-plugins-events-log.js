@@ -1,4 +1,3 @@
-import { A } from "@ember/array";
 import DiscourseRoute from "discourse/routes/discourse";
 import Log from "../models/log";
 
@@ -18,7 +17,7 @@ export default DiscourseRoute.extend({
   setupController(controller, model) {
     controller.setProperties({
       page: model.page,
-      logs: A(model.logs.map((p) => Log.create(p))),
+      logs: model.logs.map((p) => Log.create(p)),
       loadingComplete: false,
       loading: false,
     });

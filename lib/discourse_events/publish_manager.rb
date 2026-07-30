@@ -115,7 +115,7 @@ module DiscourseEvents
         end
       end
 
-      event.present? ? event : false
+      event.presence || false
     end
 
     def update_event

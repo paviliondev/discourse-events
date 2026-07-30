@@ -1,10 +1,6 @@
 import { visit } from "@ember/test-helpers";
 import { test } from "qunit";
-import {
-  acceptance,
-  exists,
-  query,
-} from "discourse/tests/helpers/qunit-helpers";
+import { acceptance, query } from "discourse/tests/helpers/qunit-helpers";
 import { default as Subscriptions } from "../fixtures/subscription-fixtures";
 
 function sourceRoutes(needs) {
@@ -45,15 +41,15 @@ acceptance("Events | log", function (needs) {
   test("Displays the log admin", async (assert) => {
     await visit("/admin/plugins/events/log");
 
-    assert.ok(exists(".events.log"), "it shows the log route");
+    assert.dom(".events.log").exists("it shows the log route");
 
-    assert.equal(
+    assert.strictEqual(
       query(".admin-events-controls h2").innerText.trim(),
       "Logs",
       "title displayed"
     );
 
-    assert.equal(
+    assert.strictEqual(
       query(".directory-table__cell.log-level").innerText.trim(),
       "info",
       "Log level displayed"

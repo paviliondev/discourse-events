@@ -1,20 +1,23 @@
+/* eslint-disable ember/no-classic-components, ember/require-tagless-components */
 import Component from "@ember/component";
-import { service } from "@ember/service";
-import discourseComputed from "discourse-common/utils/decorators";
+import { action, computed } from "@ember/object";
+import {
+  attributeBindings,
+  classNames,
+  tagName,
+} from "@ember-decorators/component";
 import Provider, { OAUTH2_TYPES } from "../models/provider";
 
-export default Component.extend({
-  tagName: "tr",
-  classNames: ["events-provider-row"],
-  attributeBindings: ["provider.id:data-provider-id"],
-  modal: service(),
-
+@tagName("tr")
+@classNames("events-provider-row")
+@attributeBindings("provider.id:data-provider-id")
+export default class EventsProviderRow extends Component {
   didReceiveAttrs() {
-    this._super();
+    super.didReceiveAttrs(...arguments);
     this.set("currentProvider", JSON.parse(JSON.stringify(this.provider)));
-  },
+  }
 
-  @discourseComputed(
+  @computed(
     "provider.name",
     "provider.url",
     "provider.provider_type",
@@ -22,97 +25,100 @@ export default Component.extend({
     "provider.client_id",
     "provider.client_secret"
   )
-  providerChanged(name, url, type, token, clientId, clientSecret) {
+  get providerChanged() {
     const current = this.currentProvider;
     return (
-      current.name !== name ||
-      current.url !== url ||
-      current.provider_type !== type ||
-      current.token !== token ||
-      current.client_id !== clientId ||
-      current.client_secret !== clientSecret
+      current.name !== this.provider.name ||
+      current.url !== this.provider.url ||
+      current.provider_type !== this.provider.provider_type ||
+      current.token !== this.provider.token ||
+      current.client_id !== this.provider.client_id ||
+      current.client_secret !== this.provider.client_secret
     );
-  },
+  }
 
-  @discourseComputed(
-    "provider.name",
-    "provider.provider_type",
-    "providerChanged"
-  )
-  saveDisabled(providerName, providerType, providerChanged) {
-    return !providerName || !providerChanged || !providerType;
-  },
+  @computed("provider.name", "provider.provider_type", "providerChanged")
+  get saveDisabled() {
+    return (
+      !this.provider.name ||
+      !this.providerChanged ||
+      !this.provider.provider_type
+    );
+  }
 
-  @discourseComputed("provider.provider_type")
-  canSave(providerType) {
-    return providerType !== "icalendar";
-  },
+  @computed("provider.provider_type")
+  get canSave() {
+    return this.provider.provider_type !== "icalendar";
+  }
 
-  @discourseComputed("providerChanged")
-  saveClass(providerChanged) {
-    return providerChanged ? "save-provider btn-primary" : "save-provider";
-  },
+  @computed("providerChanged")
+  get saveClass() {
+    return this.providerChanged ? "save-provider btn-primary" : "save-provider";
+  }
 
-  @discourseComputed(
-    "canAuthenicate",
-    "providerChanged",
-    "provider.authenticated"
-  )
-  authenticateDisabled(canAuthenicate, providerChanged, providerAuthenticated) {
-    return !canAuthenicate || providerChanged || providerAuthenticated;
-  },
+  @computed("canAuthenicate", "providerChanged", "provider.authenticated")
+  get authenticateDisabled() {
+    return (
+      !this.canAuthenicate ||
+      this.providerChanged ||
+      this.provider.authenticated
+    );
+  }
 
-  @discourseComputed("authenticateDisabled")
-  authenticateClass(authenticateDisabled) {
-    return authenticateDisabled ? "" : "btn-primary";
-  },
+  @computed("authenticateDisabled")
+  get authenticateClass() {
+    return this.authenticateDisabled ? "" : "btn-primary";
+  }
 
-  @discourseComputed("provider.provider_type")
-  canAuthenicate(providerType) {
-    return providerType && OAUTH2_TYPES.includes(providerType);
-  },
+  @computed("provider.provider_type")
+  get canAuthenicate() {
+    return (
+      this.provider.provider_type &&
+      OAUTH2_TYPES.includes(this.provider.provider_type)
+    );
+  }
 
-  @discourseComputed("provider.provider_type")
-  providerLogo(providerType) {
-    return `/plugins/discourse-events/logos/${providerType}.svg`;
-  },
+  @computed("provider.provider_type")
+  get providerLogo() {
+    return `/plugins/discourse-events/logos/${this.provider.provider_type}.svg`;
+  }
 
-  @discourseComputed("provider.status")
-  showAuthenticate(providerStatus) {
-    return providerStatus && providerStatus === "not_authenticated";
-  },
+  @computed("provider.status")
+  get showAuthenticate() {
+    return this.provider.status === "not_authenticated";
+  }
 
-  actions: {
-    saveProvider() {
-      const provider = JSON.parse(JSON.stringify(this.provider));
+  @action
+  saveProvider() {
+    const provider = JSON.parse(JSON.stringify(this.provider));
 
-      if (!provider.name) {
-        return;
-      }
+    if (!provider.name) {
+      return;
+    }
 
-      this.set("saving", true);
+    this.set("saving", true);
 
-      Provider.update(provider)
-        .then((result) => {
-          if (result) {
-            this.setProperties({
-              currentProvider: result.provider,
-              provider: Provider.create(result.provider),
-            });
-          } else if (this.currentProvider.id !== "new") {
-            this.set(
-              "provider",
-              JSON.parse(JSON.stringify(this.currentProvider))
-            );
-          }
-        })
-        .finally(() => {
-          this.set("saving", false);
-        });
-    },
+    Provider.update(provider)
+      .then((result) => {
+        if (result) {
+          this.setProperties({
+            currentProvider: result.provider,
+            provider: Provider.create(result.provider),
+          });
+        } else if (this.currentProvider.id !== "new") {
+          this.set(
+            "provider",
+            JSON.parse(JSON.stringify(this.currentProvider))
+          );
+        }
+      })
+      .finally(() => {
+        this.set("saving", false);
+      });
+  }
 
-    authenticateProvider() {
-      window.location.href = `/admin/plugins/events/provider/${this.provider.id}/authorize`;
-    },
-  },
-});
+  @action
+  authenticateProvider() {
+    window.location.href = `/admin/plugins/events/provider/${this.provider.id}/authorize`;
+  }
+}

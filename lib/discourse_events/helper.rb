@@ -4,7 +4,7 @@ module DiscourseEvents
   class Helper
     def self.localize_event(event, timezone = nil)
       event_start = event[:start].to_datetime
-      event_end = event[:end].present? ? event[:end].to_datetime : nil
+      event_end = event[:end].presence&.to_datetime
       format = event[:all_day] ? :date_only : :long
       event_version = event[:version] if event[:version]
 

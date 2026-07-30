@@ -1,65 +1,72 @@
+/* eslint-disable ember/no-classic-components, ember/require-tagless-components */
 import Component from "@ember/component";
+import { action, computed } from "@ember/object";
 import { service } from "@ember/service";
-import discourseComputed from "discourse-common/utils/decorators";
 import Event from "../../models/event";
 
-export default Component.extend({
-  createTopic: false,
-  siteSettings: service(),
+export default class EventsConnectTopic extends Component {
+  @service siteSettings;
 
-  @discourseComputed("connecting", "topicId", "createTopic", "client")
-  connectDisabled(connecting, topicId, createTopic, client) {
-    return connecting || (!topicId && !createTopic) || !client;
-  },
+  createTopic = false;
 
-  @discourseComputed(
+  @computed("connecting", "topicId", "createTopic", "client")
+  get connectDisabled() {
+    return (
+      this.connecting || (!this.topicId && !this.createTopic) || !this.client
+    );
+  }
+
+  @computed(
     "siteSettings.calendar_enabled",
     "siteSettings.discourse_post_event_enabled"
   )
-  allowedClientValues(calendarEnabled, postEventEnabled) {
-    let allowedClients = ["discourse_events"];
-    if (calendarEnabled && postEventEnabled) {
+  get allowedClientValues() {
+    const allowedClients = ["discourse_events"];
+    if (
+      this.siteSettings.calendar_enabled &&
+      this.siteSettings.discourse_post_event_enabled
+    ) {
       allowedClients.push("discourse_calendar");
     }
     return allowedClients;
-  },
+  }
 
-  actions: {
-    connectTopic() {
-      if (this.connectDisabled) {
-        return;
-      }
+  @action
+  connectTopic() {
+    if (this.connectDisabled) {
+      return;
+    }
 
-      const opts = {
-        event_id: this.model.event.id,
-        client: this.client,
-      };
+    const opts = {
+      event_id: this.model.event.id,
+      client: this.client,
+    };
 
-      if (this.topicId) {
-        opts.topic_id = this.topicId;
-      }
+    if (this.topicId) {
+      opts.topic_id = this.topicId;
+    }
 
-      if (this.createTopic) {
-        opts.category_id = this.category_id;
-        opts.username = this.username;
-      }
+    if (this.createTopic) {
+      opts.category_id = this.category_id;
+      opts.username = this.username;
+    }
 
-      this.set("connecting", true);
+    this.set("connecting", true);
 
-      Event.connectTopic(opts)
-        .then((result) => {
-          if (result?.success) {
-            this.model.onConnectTopic();
-            this.closeModal();
-          } else {
-            this.set("model.error", result.error);
-          }
-        })
-        .finally(() => this.set("connecting", false));
-    },
+    Event.connectTopic(opts)
+      .then((result) => {
+        if (result?.success) {
+          this.model.onConnectTopic();
+          this.closeModal();
+        } else {
+          this.set("model.error", result.error);
+        }
+      })
+      .finally(() => this.set("connecting", false));
+  }
 
-    cancel() {
-      this.closeModal();
-    },
-  },
-});
+  @action
+  cancel() {
+    this.closeModal();
+  }
+}

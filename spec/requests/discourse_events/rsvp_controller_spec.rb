@@ -30,7 +30,7 @@ describe DiscourseEvents::RsvpController do
   end
 
   describe "#users" do
-    fab!(:another_user) { Fabricate(:user) }
+    fab!(:another_user, :user)
 
     context "with rsvp enabled" do
       before do

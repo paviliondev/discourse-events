@@ -1,11 +1,7 @@
 import { click, fillIn, visit } from "@ember/test-helpers";
 import { test } from "qunit";
 import Category from "discourse/models/category";
-import {
-  acceptance,
-  exists,
-  query,
-} from "discourse/tests/helpers/qunit-helpers";
+import { acceptance, query } from "discourse/tests/helpers/qunit-helpers";
 import selectKit from "discourse/tests/helpers/select-kit-helper";
 import { default as Timezones } from "../fixtures/timezone-fixtures";
 
@@ -20,10 +16,9 @@ acceptance("Events | Composer", function (needs) {
     await visit("/");
     await click("#create-topic");
 
-    assert.ok(
-      !exists("#reply-control .add-event"),
-      "the add-event button is not visible"
-    );
+    assert
+      .dom("#reply-control .add-event")
+      .doesNotExist("the add-event button is not visible");
   });
 
   test("in an events category", async function (assert) {
@@ -37,14 +32,13 @@ acceptance("Events | Composer", function (needs) {
     await categoryChooser.expand();
     await categoryChooser.selectRowByValue(2);
 
-    assert.ok(
-      exists("#reply-control .add-event"),
-      "the add-event button is visible"
-    );
+    assert
+      .dom("#reply-control .add-event")
+      .exists("the add-event button is visible");
 
     await click(".add-event");
 
-    assert.ok(exists(".add-event-modal"), "the add-event-modal is visible");
+    assert.dom(".add-event-modal").exists("the add-event-modal is visible");
 
     const tzChooser = selectKit("#add-event-select-timezone");
     await tzChooser.expand();
@@ -76,9 +70,8 @@ acceptance("Events | Composer", function (needs) {
     await categoryChooser.expand();
     await categoryChooser.selectRowByValue(2);
 
-    assert.ok(
-      !exists("#reply-control .add-event"),
-      "the add-event button is not visible"
-    );
+    assert
+      .dom("#reply-control .add-event")
+      .doesNotExist("the add-event button is not visible");
   });
 });

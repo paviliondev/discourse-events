@@ -1,15 +1,12 @@
 import Component from "@glimmer/component";
 import { concat } from "@ember/helper";
-import { service } from "@ember/service";
-import DButton from "discourse/components/d-button";
-import DropdownMenu from "discourse/components/dropdown-menu";
-import i18n from "discourse-common/helpers/i18n";
-import DMenu from "float-kit/components/d-menu";
+import DMenu from "discourse/float-kit/components/d-menu";
+import DButton from "discourse/ui-kit/d-button";
+import DDropdownMenu from "discourse/ui-kit/d-dropdown-menu";
+import { i18n } from "discourse-i18n";
 import { googleUri, icsUri } from "../lib/date-utilities";
 
 export default class AddToCalendar extends Component {
-  @service site;
-
   get calendarUris() {
     const topic = this.args.topic;
 
@@ -41,7 +38,7 @@ export default class AddToCalendar extends Component {
       </:trigger>
 
       <:content>
-        <DropdownMenu as |dropdown|>
+        <DDropdownMenu as |dropdown|>
           <dropdown.item class="add-to-calendar-item">
             {{#each this.calendarUris as |c|}}
               <DButton
@@ -52,7 +49,7 @@ export default class AddToCalendar extends Component {
               />
             {{/each}}
           </dropdown.item>
-        </DropdownMenu>
+        </DDropdownMenu>
       </:content>
     </DMenu>
   </template>

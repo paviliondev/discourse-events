@@ -1,5 +1,5 @@
 import { computed } from "@ember/object";
-import CategoryChooser from "select-kit/components/category-chooser";
+import CategoryChooser from "discourse/select-kit/components/category-chooser";
 
 export default class EventsCategoryChooser extends CategoryChooser {
   @computed(

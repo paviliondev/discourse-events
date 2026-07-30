@@ -1,11 +1,14 @@
+/* eslint-disable discourse/no-computed-macros, ember/no-mixins */
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { notEmpty } from "@ember/object/computed";
+import { autoTrackedArray } from "discourse/lib/tracked-tools";
 import Message from "../mixins/message";
 import Log from "../models/log";
 
 export default class AdminPluginsEventsLog extends Controller.extend(Message) {
   @notEmpty("logs") hasLogs;
+  @autoTrackedArray logs;
   queryParams = ["order", "asc"];
   order = "";
   asc = null;
@@ -37,7 +40,7 @@ export default class AdminPluginsEventsLog extends Controller.extend(Message) {
     Log.list(params)
       .then((result) => {
         if (result?.logs && result.logs.length) {
-          this.logs.pushObjects(result.logs.map((p) => Log.create(p)));
+          this.logs.push(...result.logs.map((p) => Log.create(p)));
         } else {
           this.loadingComplete = true;
         }

@@ -3,14 +3,14 @@ import { array } from "@ember/helper";
 import { on } from "@ember/modifier";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
-import { htmlSafe } from "@ember/template";
-import categoryLink from "discourse/helpers/category-link";
-import discourseTags from "discourse/helpers/discourse-tags";
-import replaceEmoji from "discourse/helpers/replace-emoji";
+import { trustHTML } from "@ember/template";
+import DTooltip from "discourse/float-kit/components/d-tooltip";
 import { cook } from "discourse/lib/text";
 import DiscourseURL from "discourse/lib/url";
-import icon from "discourse-common/helpers/d-icon";
-import DTooltip from "float-kit/components/d-tooltip";
+import dCategoryLink from "discourse/ui-kit/helpers/d-category-link";
+import dDiscourseTags from "discourse/ui-kit/helpers/d-discourse-tags";
+import dIcon from "discourse/ui-kit/helpers/d-icon";
+import dReplaceEmoji from "discourse/ui-kit/helpers/d-replace-emoji";
 import { eventLabel } from "../lib/date-utilities";
 
 export default class EventsCalendarCard extends Component {
@@ -54,13 +54,13 @@ export default class EventsCalendarCard extends Component {
       <:trigger>
         <div class={{@event.classes}} style={{@event.listStyle}}>
           {{#unless @event.allDay}}
-            <span style={{@event.dotStyle}}>{{icon "circle"}}</span>
+            <span style={{@event.dotStyle}}>{{dIcon "circle"}}</span>
           {{/unless}}
           {{#if @event.time}}
             <span class="time">{{@event.time}}</span>
           {{/if}}
           {{#if @event.title}}
-            <span class="title" style={{@event.titleStyle}}>{{replaceEmoji
+            <span class="title" style={{@event.titleStyle}}>{{dReplaceEmoji
                 @event.title
               }}</span>
           {{/if}}
@@ -73,12 +73,12 @@ export default class EventsCalendarCard extends Component {
           </a>
 
           <div class="topic-meta">
-            {{categoryLink @event.topic.category}}
-            {{discourseTags @event.topic mode="list"}}
+            {{dCategoryLink @event.topic.category}}
+            {{dDiscourseTags @event.topic mode="list"}}
           </div>
 
           <a href class="topic-event" {{on "click" this.goToTopic}}>
-            {{htmlSafe this.topicEventLabel}}
+            {{trustHTML this.topicEventLabel}}
           </a>
 
           <a href class="topic-excerpt" {{on "click" this.goToTopic}}>

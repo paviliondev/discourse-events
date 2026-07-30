@@ -3,7 +3,7 @@ import hbs from "htmlbars-inline-precompile";
 import { module, test } from "qunit";
 import { setupRenderingTest } from "discourse/tests/helpers/component-test";
 import { query } from "discourse/tests/helpers/qunit-helpers";
-import I18n from "discourse-i18n";
+import { i18n } from "discourse-i18n";
 import { default as Timezones } from "../fixtures/timezone-fixtures";
 
 module("Poll | Component | event-form", function (hooks) {
@@ -26,13 +26,12 @@ module("Poll | Component | event-form", function (hooks) {
 
     assert.strictEqual(
       query(".event-form .control.deadline span").textContent.trim(),
-      I18n.t("add_event.deadline.label"),
+      i18n("add_event.deadline.label"),
       "displays the deadline checkbox"
     );
 
-    assert.strictEqual(
+    assert.true(
       query(".event-form .control.deadline input").checked,
-      true,
       "the checkbox is checked"
     );
   });

@@ -1,12 +1,8 @@
 import { visit } from "@ember/test-helpers";
 import { test } from "qunit";
+import { cloneJSON } from "discourse/lib/object";
 import discoveryFixtures from "discourse/tests/fixtures/discovery-fixtures";
-import {
-  acceptance,
-  exists,
-  query,
-} from "discourse/tests/helpers/qunit-helpers";
-import { cloneJSON } from "discourse-common/lib/object";
+import { acceptance, query } from "discourse/tests/helpers/qunit-helpers";
 import { default as Timezones } from "../fixtures/timezone-fixtures";
 
 const setupServer = (needs, attrs = {}) => {
@@ -29,7 +25,7 @@ acceptance("Events | topic list without an event", function (needs) {
   test("does not show event", async function (assert) {
     await visit("/c/dev");
 
-    assert.ok(!exists(".event-link"), "the event-link is not visible");
+    assert.dom(".event-link").doesNotExist("the event-link is not visible");
   });
 });
 
@@ -48,7 +44,7 @@ acceptance("Events | topic list with an event", function (needs) {
     this.siteSettings.events_timezone_display = "event";
     await visit("/c/dev");
 
-    assert.ok(exists(".event-link"), "the event-link is visible");
+    assert.dom(".event-link").exists("the event-link is visible");
     assert.strictEqual(
       query(".event-link .date").innerText.trim(),
       "11-6, 20:00, (GMT+08:00) Perth",

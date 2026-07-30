@@ -1,7 +1,8 @@
+/* eslint-disable ember/no-actions-hash, ember/no-classic-classes, ember/no-mixins */
 import Controller from "@ember/controller";
 import { notEmpty } from "@ember/object/computed";
 import { service } from "@ember/service";
-import I18n from "I18n";
+import { i18n } from "discourse-i18n";
 import Message from "../mixins/message";
 import Source from "../models/source";
 import SourceOptions from "../models/source-options";
@@ -14,28 +15,35 @@ export default Controller.extend(Message, {
 
   actions: {
     addSource() {
-      const sources = this.get("sources");
-      if (!sources.isAny("id", "new")) {
-        sources.unshiftObject(
+      const sources = this.sources;
+      if (!sources.some((source) => source.id === "new")) {
+        this.set("sources", [
           Source.create({
             id: "new",
             source_options: SourceOptions.create(),
-          })
-        );
+          }),
+          ...sources,
+        ]);
       }
     },
 
     removeSource(source) {
       if (source.id === "new") {
-        this.get("sources").removeObject(source);
+        this.set(
+          "sources",
+          this.sources.filter((item) => item !== source)
+        );
       } else {
         this.dialog.confirm({
-          message: I18n.t("admin.events.source.remove.confirm"),
+          message: i18n("admin.events.source.remove.confirm"),
           confirmButtonLabel: "admin.events.source.remove.label",
           cancelButtonLabel: "cancel",
           didConfirm: () => {
             Source.destroy(source).then(() => {
-              this.get("sources").removeObject(source);
+              this.set(
+                "sources",
+                this.sources.filter((item) => item !== source)
+              );
             });
           },
         });

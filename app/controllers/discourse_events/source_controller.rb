@@ -42,7 +42,7 @@ module DiscourseEvents
       if @errors.blank?
         render_serialized(@model, SourceSerializer, root: "source")
       else
-        render json: failed_json.merge(errors: @errors), status: 400
+        render json: failed_json.merge(errors: @errors), status: :bad_request
       end
     end
 
@@ -76,7 +76,7 @@ module DiscourseEvents
       if @errors.blank?
         render_serialized(@model, SourceSerializer, root: "source")
       else
-        render json: failed_json.merge(errors: @errors), status: 400
+        render json: failed_json.merge(errors: @errors), status: :bad_request
       end
     end
 

@@ -5,7 +5,7 @@ describe DiscourseEvents::EventController do
   fab!(:event1) do
     Fabricate(:discourse_events_event, start_time: 1.hour.from_now, name: "Ben's party")
   end
-  fab!(:topic1) { Fabricate(:topic) }
+  fab!(:topic1, :topic)
   fab!(:post1) { Fabricate(:post, topic: topic1, user: user, raw: event1.description) }
   fab!(:event_topic1) { Fabricate(:discourse_events_event_topic, event: event1, topic: topic1) }
   fab!(:event2) do

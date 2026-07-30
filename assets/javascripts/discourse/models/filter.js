@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-classic-classes */
 import EmberObject from "@ember/object";
 
 export function filtersMatch(filters1, filters2) {

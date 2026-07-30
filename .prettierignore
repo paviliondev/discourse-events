@@ -1,0 +1,7 @@
+# Legacy object-literal decorators are not supported by Prettier 3.
+assets/javascripts/discourse/components/event-filter-row.js
+assets/javascripts/discourse/components/events-calendar-day.js
+assets/javascripts/discourse/components/events-calendar.js
+assets/javascripts/discourse/initializers/discourse-events.js
+assets/javascripts/discourse/mixins/message.js
+assets/javascripts/discourse/routes/admin-plugins-events-event.js
