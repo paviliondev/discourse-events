@@ -53,7 +53,9 @@ export default {
 
         @discourseComputed("category.events_min_trust_to_create")
         canCreateEvent(minTrust) {
-          return currentUser.staff || currentUser.trust_level >= minTrust;
+          return (
+            currentUser?.staff || currentUser?.trust_level >= minTrust
+          );
         },
       });
 
@@ -111,7 +113,9 @@ export default {
 
         @discourseComputed("category.events_min_trust_to_create")
         canCreateEvent(minTrust) {
-          return currentUser.staff || currentUser.trust_level >= minTrust;
+          return (
+            currentUser?.staff || currentUser?.trust_level >= minTrust
+          );
         },
 
         @discourseComputed("last_read_post_number", "highest_post_number")
