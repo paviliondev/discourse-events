@@ -1,4 +1,3 @@
-/* eslint-disable discourse/i18n-import-location, discourse/lines-between-class-members, discourse/moved-packages-import-paths, discourse/ui-kit-imports, simple-import-sort/imports */
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { Input } from "@ember/component";
@@ -7,13 +6,13 @@ import { on } from "@ember/modifier";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
 import { hash } from "rsvp";
-import DateInput from "discourse/components/date-input";
-import InputTip from "discourse/components/input-tip";
-import TimeInput from "discourse/components/time-input";
-import concatClass from "discourse/helpers/concat-class";
-import i18n from "discourse-common/helpers/i18n";
-import ComboBox from "select-kit/components/combo-box";
-import EmailGroupUserChooser from "select-kit/components/email-group-user-chooser";
+import ComboBox from "discourse/select-kit/components/combo-box";
+import EmailGroupUserChooser from "discourse/select-kit/components/email-group-user-chooser";
+import DDateInput from "discourse/ui-kit/d-date-input";
+import DInputTip from "discourse/ui-kit/d-input-tip";
+import DTimeInput from "discourse/ui-kit/d-time-input";
+import dConcatClass from "discourse/ui-kit/helpers/d-concat-class";
+import { i18n } from "discourse-i18n";
 import {
   compileEvent,
   nextInterval,
@@ -24,6 +23,7 @@ import {
 export default class EventForm extends Component {
   @service siteSettings;
   @service site;
+
   @tracked endEnabled = false;
   @tracked allDay = false;
   @tracked deadline = false;
@@ -240,7 +240,7 @@ export default class EventForm extends Component {
             {{i18n "add_event.event_start"}}
           </span>
 
-          <InputTip @validation={{this.startDateTimeValidation}} />
+          <DInputTip @validation={{this.startDateTimeValidation}} />
 
           <div class="date-time-set">
             <div class="date-area">
@@ -248,7 +248,7 @@ export default class EventForm extends Component {
                 {{i18n "add_event.event_date"}}
               </label>
 
-              <DateInput
+              <DDateInput
                 @date={{this.startDate}}
                 @onChange={{this.onChangeStartDate}}
                 @useGlobalPickerContainer={{true}}
@@ -261,7 +261,7 @@ export default class EventForm extends Component {
                   {{i18n "add_event.event_time"}}
                 </label>
 
-                <TimeInput
+                <DTimeInput
                   @date={{this.startTime}}
                   @onChange={{this.onChangeStartTime}}
                 />
@@ -271,7 +271,7 @@ export default class EventForm extends Component {
         </div>
 
         <div
-          class={{concatClass
+          class={{dConcatClass
             "end-card date-time-card"
             (unless this.endEnabled "disabled")
           }}
@@ -280,7 +280,7 @@ export default class EventForm extends Component {
             {{i18n "add_event.event_end"}}
           </span>
 
-          <InputTip @validation={{this.scheduleDateTimeValidation}} />
+          <DInputTip @validation={{this.scheduleDateTimeValidation}} />
 
           <div class="date-time-set">
             <div class="date-area">
@@ -288,7 +288,7 @@ export default class EventForm extends Component {
                 {{i18n "add_event.event_date"}}
               </label>
 
-              <DateInput
+              <DDateInput
                 @date={{this.endDate}}
                 @onChange={{this.onChangeEndDate}}
                 @useGlobalPickerContainer={{true}}
@@ -301,7 +301,7 @@ export default class EventForm extends Component {
                   {{i18n "add_event.event_time"}}
                 </label>
 
-                <TimeInput
+                <DTimeInput
                   @date={{this.endTime}}
                   @onChange={{this.onChangeEndTime}}
                 />

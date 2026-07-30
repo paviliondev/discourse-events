@@ -1,11 +1,6 @@
-/* eslint-disable qunit/no-assert-equal, qunit/no-loose-assertions */
 import { visit } from "@ember/test-helpers";
 import { test } from "qunit";
-import {
-  acceptance,
-  exists,
-  query,
-} from "discourse/tests/helpers/qunit-helpers";
+import { acceptance, query } from "discourse/tests/helpers/qunit-helpers";
 import { default as Subscriptions } from "../fixtures/subscription-fixtures";
 
 function providerRoutes(needs) {
@@ -72,9 +67,9 @@ acceptance("Events | Provider", function (needs) {
   test("Displays the provider admin", async (assert) => {
     await visit("/admin/plugins/events/provider");
 
-    assert.ok(exists(".events.provider"), "it shows the provider route");
+    assert.dom(".events.provider").exists("it shows the provider route");
 
-    assert.equal(
+    assert.strictEqual(
       query(".admin-events-controls h2").innerText.trim(),
       "Providers",
       "title displayed"
@@ -84,7 +79,7 @@ acceptance("Events | Provider", function (needs) {
   test("Appropriate credential controls show for different provider types", async (assert) => {
     await visit("/admin/plugins/events/provider");
 
-    assert.equal(
+    assert.strictEqual(
       query(
         "tr[data-provider-id='1'] .events-provider-authentication"
       ).innerText.trim(),
@@ -92,13 +87,11 @@ acceptance("Events | Provider", function (needs) {
       "no credentials displayed"
     );
 
-    assert.ok(
-      exists(".events-provider-credentials input.client-id"),
-      "it displays the client id input"
-    );
-    assert.ok(
-      exists(".events-provider-credentials .btn.toggle-secret-visibility"),
-      "it displays the secret visibility toggle"
-    );
+    assert
+      .dom(".events-provider-credentials input.client-id")
+      .exists("it displays the client id input");
+    assert
+      .dom(".events-provider-credentials .btn.toggle-secret-visibility")
+      .exists("it displays the secret visibility toggle");
   });
 });

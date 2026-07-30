@@ -1,6 +1,5 @@
-/* eslint-disable discourse/deprecated-imports, discourse/i18n-import-location */
-import { getOwner } from "@ember/application";
-import I18n from "I18n";
+import { getOwner } from "@ember/owner";
+import I18n from "discourse-i18n";
 
 export default {
   shouldRender(_, ctx) {

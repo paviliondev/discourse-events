@@ -1,16 +1,17 @@
-/* eslint-disable discourse/deprecated-imports, discourse/lines-between-class-members, discourse/ui-kit-imports, ember/no-tracked-properties-from-args */
+/* eslint-disable ember/no-tracked-properties-from-args */
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
-import { htmlSafe } from "@ember/template";
-import DButton from "discourse/components/d-button";
+import { trustHTML } from "@ember/template";
+import DButton from "discourse/ui-kit/d-button";
 import { eventLabel } from "../lib/date-utilities";
 import AddEvent from "./modal/add-event";
 
 export default class AddToCalendar extends Component {
   @service modal;
   @service siteSettings;
+
   @tracked event = this.args.event;
 
   get valueClasses() {
@@ -68,7 +69,7 @@ export default class AddToCalendar extends Component {
         <DButton
           @action={{this.showAddEvent}}
           class={{this.valueClasses}}
-          @translatedLabel={{htmlSafe this.valueLabel}}
+          @translatedLabel={{trustHTML this.valueLabel}}
         />
         {{#unless @noText}}
           <DButton @icon="xmark" @action={{this.removeEvent}} class="remove" />

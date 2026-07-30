@@ -1,14 +1,9 @@
-/* eslint-disable discourse/discourse-common-imports, discourse/i18n-t, qunit/no-loose-assertions, qunit/no-negated-ok */
 import { visit } from "@ember/test-helpers";
 import { test } from "qunit";
+import { cloneJSON } from "discourse/lib/object";
 import topicFixtures from "discourse/tests/fixtures/topic";
-import {
-  acceptance,
-  exists,
-  query,
-} from "discourse/tests/helpers/qunit-helpers";
-import { cloneJSON } from "discourse-common/lib/object";
-import I18n from "discourse-i18n";
+import { acceptance, query } from "discourse/tests/helpers/qunit-helpers";
+import { i18n } from "discourse-i18n";
 import { default as Timezones } from "../fixtures/timezone-fixtures";
 
 const setupServer = (needs, attrs = {}) => {
@@ -29,7 +24,7 @@ acceptance("Events | topic without an event", function (needs) {
   test("does not show event", async function (assert) {
     await visit("/t/280");
 
-    assert.ok(!exists(".event-label"), "the event-label is not visible");
+    assert.dom(".event-label").doesNotExist("the event-label is not visible");
   });
 });
 
@@ -48,7 +43,7 @@ acceptance("Events | topic with an event", function (needs) {
     this.siteSettings.events_timezone_display = "event";
     await visit("/t/280");
 
-    assert.ok(exists(".event-label"), "the event-label is visible");
+    assert.dom(".event-label").exists("the event-label is visible");
     assert.strictEqual(
       query(".event-label .date").innerText.trim(),
       "November 6th, 20:00",
@@ -74,13 +69,12 @@ acceptance("Events | topic with an event that is a deadline", function (needs) {
     this.siteSettings.events_deadlines = true;
     await visit("/t/280");
 
-    assert.ok(
-      exists(".event-label.deadline.past-due"),
-      "the event-label is visible"
-    );
+    assert
+      .dom(".event-label.deadline.past-due")
+      .exists("the event-label is visible");
     assert.strictEqual(
       query(".event-label .deadline").innerText.trim().split(":")[0],
-      I18n.t("event_label.deadline.past_due"),
+      i18n("event_label.deadline.past_due"),
       "the event-label shows the Past Due element"
     );
   });

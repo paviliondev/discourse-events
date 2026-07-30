@@ -1,11 +1,10 @@
-/* eslint-disable discourse/i18n-import-location */
 import Component from "@glimmer/component";
 import { dasherize } from "@ember/string";
-import I18n from "I18n";
+import { i18n } from "discourse-i18n";
 
 export default class EventsProviderStatus extends Component {
   get title() {
-    return I18n.t(`admin.events.provider.status.${this.args.status}.title`);
+    return i18n(`admin.events.provider.status.${this.args.status}.title`);
   }
 
   get class() {
@@ -13,7 +12,7 @@ export default class EventsProviderStatus extends Component {
   }
 
   get label() {
-    return I18n.t(`admin.events.provider.status.${this.args.status}.label`);
+    return i18n(`admin.events.provider.status.${this.args.status}.label`);
   }
 
   <template>

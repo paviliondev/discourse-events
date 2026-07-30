@@ -1,13 +1,13 @@
-/* eslint-disable discourse/discourse-common-imports, discourse/i18n-import-location, ember/no-classic-classes, ember/no-classic-components, ember/require-tagless-components, simple-import-sort/imports */
+/* eslint-disable ember/no-classic-components, ember/require-tagless-components */
 import Component from "@ember/component";
-import discourseComputed from "discourse-common/utils/decorators";
-import I18n from "I18n";
+import { computed } from "@ember/object";
+import { classNames } from "@ember-decorators/component";
+import { i18n } from "discourse-i18n";
 
-export default Component.extend({
-  classNames: ["events-header"],
-
-  @discourseComputed("viewName")
-  title(viewName) {
-    return I18n.t(`admin.events.${viewName}.title`);
-  },
-});
+@classNames("events-header")
+export default class EventsHeader extends Component {
+  @computed("viewName")
+  get title() {
+    return i18n(`admin.events.${this.viewName}.title`);
+  }
+}

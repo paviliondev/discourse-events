@@ -1,16 +1,16 @@
-/* eslint-disable discourse/discourse-common-imports, discourse/i18n-import-location, ember/no-actions-hash, ember/no-classic-classes, ember/no-classic-components, ember/require-tagless-components, simple-import-sort/imports */
+/* eslint-disable ember/no-actions-hash, ember/no-classic-classes, ember/no-classic-components, ember/require-tagless-components */
 import Component from "@ember/component";
 import { alias, not, or } from "@ember/object/computed";
 import { scheduleOnce } from "@ember/runloop";
 import { service } from "@ember/service";
-import Category from "discourse/models/category";
 import {
   bind,
   default as discourseComputed,
   observes,
   on,
-} from "discourse-common/utils/decorators";
-import I18n from "I18n";
+} from "discourse/lib/decorators";
+import Category from "discourse/models/category";
+import I18n from "discourse-i18n";
 import {
   calendarDays,
   calendarRange,

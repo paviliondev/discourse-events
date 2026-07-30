@@ -37,8 +37,9 @@ export default DiscourseRoute.extend({
 
   @action
   willTransition() {
-    this.controllerFor("adminPlugins.events.event")
-      .get("selectedEventIds")
-      .clear();
+    this.controllerFor("adminPlugins.events.event").set(
+      "selectedEventIds",
+      []
+    );
   },
 });

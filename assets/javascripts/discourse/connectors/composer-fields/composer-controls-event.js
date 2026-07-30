@@ -1,5 +1,5 @@
-/* eslint-disable discourse/deprecated-imports, ember/no-observers */
-import { getOwner } from "@ember/application";
+/* eslint-disable ember/no-observers */
+import { getOwner } from "@ember/owner";
 
 export default {
   shouldRender(_, ctx) {

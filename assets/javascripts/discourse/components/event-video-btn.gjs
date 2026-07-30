@@ -1,11 +1,10 @@
-/* eslint-disable discourse/discourse-common-imports, discourse/i18n-import-location, simple-import-sort/imports */
 import Component from "@glimmer/component";
-import dIcon from "discourse-common/helpers/d-icon";
-import I18n from "I18n";
+import dIcon from "discourse/ui-kit/helpers/d-icon";
+import { i18n } from "discourse-i18n";
 
 export default class EventVideoBtn extends Component {
   get label() {
-    return I18n.t("topic.event.video.label");
+    return i18n("topic.event.video.label");
   }
 
   <template>

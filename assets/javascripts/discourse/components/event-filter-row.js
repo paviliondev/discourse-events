@@ -1,6 +1,6 @@
-/* eslint-disable discourse/discourse-common-imports, ember/no-actions-hash, ember/no-classic-classes, ember/no-classic-components, ember/require-tagless-components */
+/* eslint-disable ember/no-actions-hash, ember/no-classic-classes, ember/no-classic-components, ember/require-tagless-components */
 import Component from "@ember/component";
-import { default as discourseComputed } from "discourse-common/utils/decorators";
+import { default as discourseComputed } from "discourse/lib/decorators";
 
 const QUERY_COLUMNS = [
   {

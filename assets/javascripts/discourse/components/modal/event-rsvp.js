@@ -1,22 +1,21 @@
-/* eslint-disable discourse/deprecated-imports, discourse/discourse-common-imports, discourse/i18n-import-location, ember/avoid-leaking-state-in-ember-objects, ember/no-classic-classes, ember/no-classic-components, ember/require-tagless-components, simple-import-sort/imports */
-import { getOwner } from "@ember/application";
+/* eslint-disable ember/no-classic-components, ember/require-tagless-components */
 import Component from "@ember/component";
-import { action } from "@ember/object";
+import { action, computed } from "@ember/object";
+import { getOwner } from "@ember/owner";
 import User from "discourse/models/user";
-import discourseComputed from "discourse-common/utils/decorators";
-import I18n from "I18n";
+import { i18n } from "discourse-i18n";
 import EventRsvp, { rsvpTypes } from "../../models/event-rsvp";
 
-export default Component.extend({
-  userList: [],
-  type: "going",
-  title: I18n.t("event_rsvp.attendees.title"),
-  rsvpTypes,
+export default class EventRsvpModal extends Component {
+  userList = [];
+  type = "going";
+  title = i18n("event_rsvp.attendees.title");
+  rsvpTypes = rsvpTypes;
 
   didReceiveAttrs() {
-    this._super();
+    super.didReceiveAttrs(...arguments);
     this.setUserList();
-  },
+  }
 
   @action
   setUserList() {
@@ -36,15 +35,16 @@ export default Component.extend({
         loadingList: false,
       });
     });
-  },
+  }
 
   @action
   navClass(type) {
     return type === this.get("type") ? "active" : "";
-  },
+  }
 
-  @discourseComputed("userList")
-  filteredList(userList) {
+  @computed("userList.[]")
+  get filteredList() {
+    const userList = [...this.userList];
     const currentUser = this.get("currentUser");
     if (currentUser) {
       userList.sort((a) => {
@@ -56,19 +56,19 @@ export default Component.extend({
       });
     }
     return userList;
-  },
+  }
 
   @action
   setType(type) {
     event?.preventDefault();
     this.set("type", type);
     this.setUserList();
-  },
+  }
 
   @action
   composePrivateMessage(user) {
     const controller = getOwner(this).lookup("controller:application");
     this.closeModal();
     controller.send("composePrivateMessage", User.create(user));
-  },
-});
+  }
+}

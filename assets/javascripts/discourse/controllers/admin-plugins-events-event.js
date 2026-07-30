@@ -1,11 +1,10 @@
-/* eslint-disable discourse/deprecated-imports, discourse/discourse-common-imports, discourse/i18n-import-location, discourse/lines-between-class-members, discourse/no-computed-macros, discourse/no-unused-services, ember/no-mixins, simple-import-sort/imports */
-import { A } from "@ember/array";
+/* eslint-disable discourse/no-computed-macros, ember/no-mixins */
 import Controller from "@ember/controller";
-import { action } from "@ember/object";
+import { action, computed } from "@ember/object";
 import { notEmpty } from "@ember/object/computed";
 import { service } from "@ember/service";
-import discourseComputed from "discourse-common/utils/decorators";
-import I18n from "I18n";
+import { autoTrackedArray } from "discourse/lib/tracked-tools";
+import { i18n } from "discourse-i18n";
 import ConfirmEventDeletion from "../components/modal/events-confirm-event-deletion";
 import ConnectTopic from "../components/modal/events-connect-topic";
 import Message from "../mixins/message";
@@ -15,9 +14,10 @@ export default class AdminPluginsEventsEvent extends Controller.extend(
   Message
 ) {
   @service modal;
-  @service router;
+
   @notEmpty("events") hasEvents;
-  selectedEventIds = A();
+  @autoTrackedArray events;
+  @autoTrackedArray selectedEventIds = [];
 
   selectAll = false;
   order = "";
@@ -28,48 +28,48 @@ export default class AdminPluginsEventsEvent extends Controller.extend(
   loadingComplete = false;
   loading = false;
 
-  @discourseComputed("selectedEventIds.[]", "hasEvents")
-  deleteDisabled(selectedEventIds, hasEvents) {
-    return !hasEvents || !selectedEventIds.length;
+  @computed("selectedEventIds.[]", "hasEvents")
+  get deleteDisabled() {
+    return !this.hasEvents || !this.selectedEventIds?.length;
   }
 
-  @discourseComputed("hasEvents")
-  selectDisabled(hasEvents) {
-    return !hasEvents;
+  @computed("hasEvents")
+  get selectDisabled() {
+    return !this.hasEvents;
   }
 
-  @discourseComputed("filter")
-  noneLabel(filter) {
-    return I18n.t(
+  @computed("filter")
+  get noneLabel() {
+    return i18n(
       `admin.events.event.none.${
-        filter === "connected" ? "connected" : "unconnected"
+        this.filter === "connected" ? "connected" : "unconnected"
       }`
     );
   }
 
-  @discourseComputed("filter")
-  unconnectedRoute(filter) {
-    return filter === "unconnected";
+  @computed("filter")
+  get unconnectedRoute() {
+    return this.filter === "unconnected";
   }
 
-  @discourseComputed("filter")
-  connectedRoute(filter) {
-    return filter === "connected";
+  @computed("filter")
+  get connectedRoute() {
+    return this.filter === "connected";
   }
 
-  @discourseComputed("filter")
-  viewName(filter) {
-    return `event.${filter}`;
+  @computed("filter")
+  get viewName() {
+    return `event.${this.filter}`;
   }
 
-  @discourseComputed("selectedEventIds.[]")
-  connectTopicDisabled(selectedEventIds) {
-    return selectedEventIds.length !== 1;
+  @computed("selectedEventIds.[]")
+  get connectTopicDisabled() {
+    return this.selectedEventIds?.length !== 1;
   }
 
-  @discourseComputed("selectedEventIds.[]")
-  updateTopicDisabled(selectedEventIds) {
-    return selectedEventIds.length !== 1;
+  @computed("selectedEventIds.[]")
+  get updateTopicDisabled() {
+    return this.selectedEventIds?.length !== 1;
   }
 
   updateCurrentRouteCount() {
@@ -80,9 +80,9 @@ export default class AdminPluginsEventsEvent extends Controller.extend(
     );
   }
 
-  @discourseComputed("filter")
-  showTopics(filter) {
-    return filter === "connected";
+  @computed("filter")
+  get showTopics() {
+    return this.filter === "connected";
   }
 
   selectAllEvents() {
@@ -128,8 +128,8 @@ export default class AdminPluginsEventsEvent extends Controller.extend(
       .then((result) => {
         if (result.events && result.events.length) {
           this.set("page", page);
-          this.get("events").pushObjects(
-            Event.toArray(result.events, this.selectedEventIds)
+          this.events.push(
+            ...Event.toArray(result.events, this.selectedEventIds)
           );
         } else {
           this.set("loadingComplete", true);
@@ -141,7 +141,7 @@ export default class AdminPluginsEventsEvent extends Controller.extend(
   @action
   openConnectTopic() {
     const selectedEventId = this.selectedEventIds[0];
-    const event = this.get("events").findBy("id", selectedEventId);
+    const event = this.events.find((item) => item.id === selectedEventId);
 
     if (!event) {
       return;
@@ -151,8 +151,8 @@ export default class AdminPluginsEventsEvent extends Controller.extend(
       model: {
         event,
         onConnectTopic: () => {
-          this.set("selectedEventIds", A());
-          this.get("events").removeObject(event);
+          this.selectedEventIds = [];
+          this.events = this.events.filter((item) => item !== event);
         },
       },
     });
@@ -161,7 +161,7 @@ export default class AdminPluginsEventsEvent extends Controller.extend(
   @action
   updateTopic() {
     const selectedEventId = this.selectedEventIds[0];
-    const event = this.get("events").findBy("id", selectedEventId);
+    const event = this.events.find((item) => item.id === selectedEventId);
 
     if (!event) {
       return;
@@ -172,7 +172,7 @@ export default class AdminPluginsEventsEvent extends Controller.extend(
     Event.updateTopic({ event_id: event.id })
       .then((result) => {
         if (result.success) {
-          this.set("selectedEventIds", A());
+          this.selectedEventIds = [];
         }
       })
       .finally(() => this.set("updating", false));
@@ -186,9 +186,13 @@ export default class AdminPluginsEventsEvent extends Controller.extend(
       }
     });
     if (selected) {
-      this.get("selectedEventIds").addObjects(eventIds);
+      this.selectedEventIds = [
+        ...new Set([...this.selectedEventIds, ...eventIds]),
+      ];
     } else {
-      this.get("selectedEventIds").removeObjects(eventIds);
+      this.selectedEventIds = this.selectedEventIds.filter(
+        (eventId) => !eventIds.includes(eventId)
+      );
     }
   }
 
@@ -201,15 +205,14 @@ export default class AdminPluginsEventsEvent extends Controller.extend(
           destroyedEventIds = null,
           destroyedTopicsEvents = null
         ) => {
-          this.set("selectedEventIds", A());
+          this.selectedEventIds = [];
 
-          const events = this.get("events");
+          const events = this.events;
 
           if (destroyedEventIds) {
-            const destroyedEvents = events.filter((e) =>
-              destroyedEventIds.includes(e.id)
+            this.events = events.filter(
+              (event) => !destroyedEventIds.includes(event.id)
             );
-            events.removeObjects(destroyedEvents);
             this.updateCurrentRouteCount();
           }
 

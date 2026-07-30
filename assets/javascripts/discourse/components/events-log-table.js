@@ -20,7 +20,7 @@ export default class EventsLogTable extends Component {
     Log.list({ page })
       .then((result) => {
         if (result.logs && result.logs.length) {
-          this.args.logs.pushObjects(result.logs.map((p) => Log.create(p)));
+          this.args.logs.push(...result.logs.map((p) => Log.create(p)));
         } else {
           this.loadingComplete = true;
         }

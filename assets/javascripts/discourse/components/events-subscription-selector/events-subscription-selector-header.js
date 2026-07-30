@@ -1,7 +1,6 @@
-/* eslint-disable discourse/moved-packages-import-paths */
 import { computed } from "@ember/object";
 import { reads } from "@ember/object/computed";
-import SingleSelectHeaderComponent from "select-kit/components/select-kit/single-select-header";
+import SingleSelectHeaderComponent from "discourse/select-kit/components/select-kit/single-select-header";
 
 export default SingleSelectHeaderComponent.extend({
   classNameBindings: [
